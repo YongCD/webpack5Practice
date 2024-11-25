@@ -17,4 +17,7 @@ module.exports = {
       inject: 'body'
     })
   ],
+  devServer: {
+    static: './dist',
+  }
 };
