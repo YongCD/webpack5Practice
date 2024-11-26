@@ -7,10 +7,22 @@ const json5 = require('json5');
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    index: './src/index.js',
+    another: './src/another-module.js'
+    // index: {
+    //   import: './src/index.js',
+    //   dependOn: 'shared'
+    // },
+    // another: {
+    //   import: './src/another-module.js',
+    //   dependOn: 'shared'
+    // },
+    // shared: 'lodash'
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     clean: true,
     assetModuleFilename: 'images/[hash][ext]'
   },
@@ -28,10 +40,11 @@ module.exports = {
   ],
   optimization: {
     minimizer: [
-      // 在 webpack@5 中，你可以使用 `...` 语法来扩展现有的 minimizer（即 `terser-webpack-plugin`），将下一行取消注释
-      // `...`,
       new CssMinimizerPlugin(),
     ],
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   devServer: {
     static: './dist',
